@@ -4,18 +4,23 @@ const prisma = new PrismaClient({
     // log: ['query', 'info', 'warn', 'error']
 });
 
-export const getRecipesByIngredients = async (ingredients: string[]) => {
+export const getRecipesByIngredients = async (ingredients: string[], onlyFavorites = false) => {
     return prisma.recipe.findMany({
         where: {
             ingredients: {
                 hasSome: ingredients,
             },
+            ...(onlyFavorites && { isFavorite: true }),
         },
     });
 };
 
-export const getAllRecipes = async () => {
-    return prisma.recipe.findMany();
+export const getAllRecipes = async (onlyFavorites = false) => {
+    return prisma.recipe.findMany({
+        where: {
+            ...(onlyFavorites && { isFavorite: true }),
+        },
+    });
 };
 
 export const getRecipeById = async (id: string) => {
@@ -28,7 +33,8 @@ export const createRecipe = async (
     name: string,
     ingredients: string[],
     instructions: string,
-    image?: string
+    image?: string,
+    isFavorite: boolean = false
 ) => {
     return prisma.recipe.create({
         data: {
@@ -36,6 +42,7 @@ export const createRecipe = async (
             ingredients,
             instructions,
             image,
+            isFavorite
         },
     });
 };

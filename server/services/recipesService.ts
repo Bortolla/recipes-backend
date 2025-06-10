@@ -1,12 +1,13 @@
 import { ResponseDTO } from '../dtos/responseDto';
 import * as recipesData from '../data/recipesData';
+import { on } from 'events';
 
-export const getAllRecipes = async (ingredients: string[]): Promise<ResponseDTO> => {
+export const getAllRecipes = async (ingredients: string[], onlyFavorites: boolean): Promise<ResponseDTO> => {
     // If no ingredients, just get all of the recipes
     // if there are ingredients, then get the recipes with said ingredients
     const recipes = ingredients.length === 0
-        ? await recipesData.getAllRecipes()
-        : await recipesData.getRecipesByIngredients(ingredients);
+        ? await recipesData.getAllRecipes(onlyFavorites)
+        : await recipesData.getRecipesByIngredients(ingredients, onlyFavorites);
 
     return new ResponseDTO("Success", 200, 'Recipes retrieved successfully', recipes);
 };
@@ -28,7 +29,8 @@ export const createRecipe = async (
     name: string,
     ingredientsRaw: string[] | string,
     instructions: string,
-    image?: string
+    image?: string,
+    isFavorite: boolean = false
 ): Promise<ResponseDTO> => {
     if (!name || name.trim().length < 1) {
         return new ResponseDTO("Error", 400, 'Name is required');
@@ -47,6 +49,6 @@ export const createRecipe = async (
         return new ResponseDTO("Error", 400, 'Instructions must be at least 10 characters long');
     }
 
-    const recipe = await recipesData.createRecipe(name, ingredients, instructions, image);
+    const recipe = await recipesData.createRecipe(name, ingredients, instructions, image, isFavorite);
     return new ResponseDTO("Success", 201, 'Recipe created successfully', recipe);
 };
