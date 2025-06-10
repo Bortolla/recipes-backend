@@ -2,7 +2,7 @@
 
 This project is REST API built with Node.js + Express.js + TypeScript + Prisma + MongoDB (running on an Atlas instance)
 
-# Project Structure
+## Project Structure
 
 ```txt
 .
@@ -38,7 +38,7 @@ This is what the flux of data looks like:
 3. once the request body has been treated accordingly, then the data gets delegated to the services layer, where all the business logic lives;
 4. then we got the data layer, where all the database queries are done.
 
-# Database
+### Database
 
 - This project uses MongoDB and **Prisma** and, Prisma requires MongoDB to run with replica-set enabled, so, for convenience, I decided to host the database in a free cluster on Atlas. But, if you do decide to run the database locally, make sure to run MongoDB with replica-set enabled.
 
