@@ -4,6 +4,7 @@ This project is REST API built with Node.js + Express.js + TypeScript + Prisma +
 
 # Project Structure
 
+```txt
 .
 ├── package.json
 ├── package-lock.json
@@ -26,6 +27,7 @@ This project is REST API built with Node.js + Express.js + TypeScript + Prisma +
 │   ├── server.ts
 ├── tsconfig.json
 └── uploads
+```
 
 Basically, we have the server.ts, where the server is instantiated.
 
